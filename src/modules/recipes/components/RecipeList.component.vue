@@ -6,7 +6,7 @@
         </div>
 
         <div v-if="error" class="error">
-            {{ error }}
+            {{ message }}
         </div>
 
         <div>
@@ -45,57 +45,32 @@
 
 <script>
 
-  import RecipeService from '@/services/recipes';
-  import utils from '@/utils';
+  import { mapGetters } from 'vuex';
 
   export default {
     name: 'RecipeList',
     data () {
       return {
-        loading: true,
-        error: false,
-        message: 'not updated',
-        recipes: []
       }
     },
     created () {
       // fetch the data when the view is created
       // and the data is already being observed
-      this.fetchData()
+      this.fetchData();
+    },
+    computed: {
+      // use es6 spreader to take the mapped functions
+      // & turn them to object member functions
+      ...mapGetters([ 'loading', 'error', 'message', 'recipes' ])
+    },
+    methods: {
+      fetchData() {
+        this.$store.dispatch('listRecipes');
+      }
     },
     watch: {
       // call again the method if the route changes
       '$route': 'fetchData'
-    },
-    methods: {
-      fetchData () {
-        let self = this;
-        self.error = self.post = null
-        self.loading = true
-        RecipeService.listRecipes(self.onScan);
-      },
-      onScan(err, data) {
-        let self = this;
-        self.message = 'updated';
-        self.loading = false
-        if (err) {
-          self.error = err.toString()
-          console.error("Unable to scan the table. Error JSON:", utils.stringify(err));
-        } else {
-          console.log("Scan succeeded.");
-          data.Items.forEach(function(itemdata) {
-            // console.log("Item :", utils.stringify(itemdata));
-            let marshalled = {
-              "title": itemdata["title"]["S"],
-              "recipeId": itemdata["recipeId"]["N"],
-              "internalCode": itemdata["internalCode"]["S"],
-              "authors": itemdata["authors"]["L"],
-              "status": itemdata["status"]["S"]
-            };
-            self.recipes.push(marshalled);
-          });
-        }
-      }
     }
   };
 </script>

@@ -8,7 +8,7 @@
 <script>
 
   // note: @ is an alias to /src
-  import RecipeForm from '@/components/RecipeForm.vue';
+  import RecipeForm from '../components/RecipeForm.component.vue';
 
   export default {
     name: 'NewRecipe',

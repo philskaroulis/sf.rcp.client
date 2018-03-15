@@ -1,19 +1,19 @@
 <template>
-  <div class="display-recipe">
+  <div class="edit-recipe">
     <h1>Recipe for {{ recipeId }}</h1>
-    <RecipeDisplay/>
+    <RecipeForm/>
   </div>
 </template>
 
 <script>
 
   // note: @ is an alias to /src
-  import RecipeDisplay from '@/components/RecipeDisplay.vue';
+  import RecipeForm from '../components/RecipeForm.component.vue';
 
   export default {
-    name: 'DisplayRecipe',
+    name: 'EditRecipe',
     components: {
-      RecipeDisplay,
+      RecipeForm,
     },
     computed: {
       recipeId () {

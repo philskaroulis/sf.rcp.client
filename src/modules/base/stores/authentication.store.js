@@ -17,10 +17,10 @@ export default {
         status: mutation.status,
         user: mutation.user
       }
-      console.info('authentication state',state.authetication);
     }
   },
   // asynch mutations called using this.$store.dispatch(type,mutation)
   actions: {
+
   },
 }

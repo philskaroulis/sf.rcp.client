@@ -18,6 +18,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
+
   export default {
     name: 'VueApplication',
     computed: {

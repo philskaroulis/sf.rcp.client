@@ -8,7 +8,7 @@
 <script>
 
   // note: @ is an alias to /src
-  import RecipeList from '@/components/RecipeList.vue';
+  import RecipeList from '../components/RecipeList.component.vue';
 
   export default {
     name: 'Recipes',
