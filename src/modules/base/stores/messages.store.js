@@ -3,10 +3,14 @@ import utils from '@/utils';
 export default {
   state: {
     messages: [],
+    error: false,
   },
   getters: {
     messages(state) {
       return state.messages
+    },
+    error(state) {
+      return state.error
     }
   },
   // synchronous mutations called using this.$store.commit(type,mutation)

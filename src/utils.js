@@ -1,6 +1,9 @@
+import uuidv1 from 'uuid/v1'
+
 export default {
   emptyArray,
-  stringify
+  uuid,
+  stringify,
 }
 
 /**
@@ -12,6 +15,14 @@ function emptyArray(arr) {
 }
 
 /**
+ * Provives a UUID.
+ * @returns {string} string.
+ */
+function uuid() {
+  return uuidv1()
+}
+
+/**
  * Turns JSON object to string.
  * @param {object} data object to turn to a string.
  * @returns {string} string.
@@ -19,3 +30,6 @@ function emptyArray(arr) {
 function stringify(data) {
   return JSON.stringify(data, null, 2);
 }
+
+
+

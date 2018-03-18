@@ -75,3 +75,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# db files
+src/db-clients/*.db

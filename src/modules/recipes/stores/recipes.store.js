@@ -1,23 +1,18 @@
 import RecipesService from '../services/recipes.service'
 
+const blankRecipe = {
+  id: '',
+  code: '',
+  title: '',
+  status: ''
+}
+
 export default {
   state: {
-    loading: true,
-    error: false,
-    message: '',
     recipes: [],
-    recipe: {}
+    recipe: blankRecipe
   },
   getters: {
-    loading(state) {
-      return state.loading
-    },
-    error(state) {
-      return state.error
-    },
-    message(state) {
-      return state.message
-    },
     recipes(state) {
       return state.recipes
     },
@@ -30,9 +25,11 @@ export default {
     updateRecipesList(state, mutation) {
       state.recipes.length = 0
       state.recipes = state.recipes.concat(mutation)
-      console.info('mutation',mutation)
     },
-    updateCurrentRecipe(state, mutation) {
+    clearRecipe(state) {
+      state.recipe = blankRecipe
+    },
+    updateRecipe(state, mutation) {
       state.recipe = mutation
     },
     actionInit(state){
@@ -40,7 +37,7 @@ export default {
       state.loading = true
     },
     actionSuccess(state,mutation) {
-      console.log(mutation)
+      // console.log(mutation)
       state.loading = false
       state.error = false
       state.message = mutation
@@ -59,6 +56,19 @@ export default {
       RecipesService.listRecipes().then(function(data) {
         commit('updateRecipesList', data)
         commit('actionSuccess', 'listRecipes success')
+      }).catch(function(err) {
+        commit('actionError', err)
+      })
+    },
+    createRecipe({state, commit}, options) {
+      options = options || {};
+      options.clear = options.clear || true;
+      commit('actionInit')
+      RecipesService.createRecipe(state.recipe).then(function(data) {
+        commit('actionSuccess', 'createRecipe success')
+        if (options.clear) {
+          commit('clearRecipe')
+        }
       }).catch(function(err) {
         commit('actionError', err)
       })

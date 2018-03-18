@@ -1,18 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link :to="{name:'ListRecipes'}">Recipes</router-link>
+    <div class="container">
+      <header class="navbar">
+        <section class="navbar-section">
+          <router-link to="/" class="navbar-brand mr-2">Home</router-link> |
+          <router-link to="/about" class="btn btn-link">About</router-link> |
+          <router-link :to="{name:'ListRecipes'}" class="btn btn-link">Recipes</router-link>
+        </section>
+        <section class="navbar-section">
+          <div class="input-group input-inline">
+            <input class="form-input" type="text" placeholder="search">
+            <button class="btn btn-primary input-group-btn">Search</button>
+          </div>
+        </section>
+      </header>
+      <!--<div id="nav">-->
+        <!--<router-link to="/">Home</router-link> |-->
+        <!--<router-link to="/about">About</router-link> |-->
+        <!--<router-link :to="{name:'ListRecipes'}">Recipes</router-link>-->
+      <!--</div>-->
+      <!--&lt;!&ndash; message board &ndash;&gt;-->
+      <!--<div class="application-messages" v-for="m in messages">-->
+        <!--<div class="application-message">-->
+          <!--<div class="msg-title">{{ m.title }}</div>-->
+          <!--<div class="msg-body">{{ m.body }}</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <router-view/>
     </div>
-    <!-- message board -->
-    <div class="application-messages" v-for="m in messages">
-      <div class="application-message">
-        <div class="msg-title">{{ m.title }}</div>
-        <div class="msg-body">{{ m.body }}</div>
-      </div>
-    </div>
-    <router-view/>
   </div>
 </template>
 
@@ -35,13 +50,13 @@
     },
     mounted() {
       // call the state mutation 'displayMessage'
-      this.$store.commit('displayMessage', {
-        clear: true,
-        message: {
-          title: 'Greetings',
-          body: 'Welcome to Safe Recipes.',
-        }
-      });
+      // this.$store.commit('displayMessage', {
+      //   clear: true,
+      //   message: {
+      //     title: 'Greetings',
+      //     body: 'Welcome to Safe Recipes.',
+      //   }
+      // });
     }
   }
 </script>

@@ -1,5 +1,6 @@
 
-import { database } from '@/db';
+import { database } from '@/db'
+import utils from '@/utils';
 
 // listRecipes
 
@@ -11,17 +12,26 @@ export default {
     }
     return database.list(options).then(
       function (data) {
-        let list = []
-        data.Items.forEach(function(itemdata) {
-          list.push({
-            "title": itemdata["title"]["S"],
-            "recipeId": itemdata["recipeId"]["N"],
-            "internalCode": itemdata["internalCode"]["S"],
-            "authors": itemdata["authors"]["L"],
-            "status": itemdata["status"]["S"]
-          })
-        })
-        return list
+        return [].concat(data);
+      },
+      function (err) {
+        throw err;
+      }
+    )
+  },
+  createRecipe(recipe) {
+    let options = {
+      tableName: 'Recipes',
+      item:{
+        "recipeId": utils.uuid(),
+        "title": recipe.title,
+        "internalCode": recipe.internalCode
+      }
+    }
+    return database.create(options).then(
+      function (data) {
+        console.info('data',data)
+        return {};
       },
       function (err) {
         throw err;

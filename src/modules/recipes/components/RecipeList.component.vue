@@ -14,26 +14,24 @@
         </div>
 
         <div v-if="recipes.length" class="content">
-            <table>
+            <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>recipeId</th>
-                    <th>title</th>
-                    <th>status</th>
-                    <th>internalCode</th>
+                    <th>Recipe Code</th>
+                    <th>Title</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="r in recipes">
-                    <td><router-link :to="{ name: 'DisplayRecipe', params: { id: r.recipeId }}">{{ r.recipeId }}</router-link></td>
+                    <td><router-link :to="{ name: 'DisplayRecipe', params: { id: r.id }}">{{ r.code }}</router-link></td>
                     <td>{{ r.title }}</td>
                     <td>{{ r.status }}</td>
-                    <td>{{ r.internalCode }}</td>
                     <td>
-                        <router-link :to="{ name: 'EditRecipe', params: { id: r.recipeId }}"> [ Edit Recipe ]</router-link>
+                        <router-link :to="{ name: 'EditRecipe', params: { id: r.id }}">Edit</router-link>
                         &nbsp;
-                        <router-link :to="{ name: 'ArchiveRecipe', params: { id: r.recipeId }}"> [ Archive Recipe ]</router-link>
+                        <router-link :to="{ name: 'ArchiveRecipe', params: { id: r.id }}">Archive</router-link>
                     </td>
                 </tr>
                 </tbody>
