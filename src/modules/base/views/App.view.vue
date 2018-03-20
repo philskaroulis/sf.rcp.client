@@ -1,25 +1,30 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link :to="{name:'ListRecipes'}">Recipes</router-link>
+    <div class="container">
+      <!--&lt;!&ndash; message board &ndash;&gt;-->
+      <!--<div class="application-messages" v-for="m in messages">-->
+        <!--<div class="application-message">-->
+          <!--<div class="msg-title">{{ m.title }}</div>-->
+          <!--<div class="msg-body">{{ m.body }}</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <AppNavigation/>
+      <router-view/>
     </div>
-    <!-- message board -->
-    <div class="application-messages" v-for="m in messages">
-      <div class="application-message">
-        <div class="msg-title">{{ m.title }}</div>
-        <div class="msg-body">{{ m.body }}</div>
-      </div>
-    </div>
-    <router-view/>
   </div>
 </template>
 
 <script>
+  // note: @ is an alias to /src
+  import AppNavigation from '../components/AppNavigation.component.vue';
+
   import { mapGetters } from 'vuex';
+
   export default {
     name: 'VueApplication',
+    components: {
+      AppNavigation,
+    },
     computed: {
       // use es6 spreader to take the mapped functions
       // & turn them to object member functions
@@ -34,13 +39,13 @@
     },
     mounted() {
       // call the state mutation 'displayMessage'
-      this.$store.commit('displayMessage', {
-        clear: true,
-        message: {
-          title: 'Greetings',
-          body: 'Welcome to Safe Recipes.',
-        }
-      });
+      // this.$store.commit('displayMessage', {
+      //   clear: true,
+      //   message: {
+      //     title: 'Greetings',
+      //     body: 'Welcome to Safe Recipes.',
+      //   }
+      // });
     }
   }
 </script>

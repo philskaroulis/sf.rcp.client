@@ -1,26 +1,31 @@
 export default {
   state: {
-    authetication: {}
+    authentication: {
+      status: 'active',
+      user: {
+        person_id: ''
+      }
+    }
   },
   getters: {
-    autheticationStatus(state) {
-      return state.authetication.status;
+    authenticationStatus(state) {
+      return state.authentication.status;
     },
-    autheticatedUser(state) {
-      return state.authetication.user;
+    authenticatedUser(state) {
+      return state.authentication.user;
     }
   },
   // synchronous mutations called using this.$store.commit(type,mutation)
   mutations: {
     updateAuthentication(state, mutation) {
-      state.authetication = {
+      state.authentication = {
         status: mutation.status,
         user: mutation.user
       }
-      console.info('authentication state',state.authetication);
     }
   },
   // asynch mutations called using this.$store.dispatch(type,mutation)
   actions: {
+
   },
 }

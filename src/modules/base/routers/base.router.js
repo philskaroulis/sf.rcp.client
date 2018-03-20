@@ -1,6 +1,6 @@
 
-import Home from './Home.vue';
-import About from './About.vue';
+import Home from '../views/Home.view.vue';
+import About from '../views/About.view.vue';
 
 export default [
   {
