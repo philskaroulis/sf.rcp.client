@@ -37,7 +37,7 @@ function migrate(db) {
   // db.run(sqlStr)
 
   // console.log("Load recipe data")
-  sqlStr = "CREATE TABLE recipe (id TEXT PRIMARY KEY, code TEXT, person_id TEXT, title TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft', created_on TEXT NOT NULL DEFAULT (datetime('now')), FOREIGN KEY(person_id) REFERENCES person(id));"
+  sqlStr = "CREATE TABLE recipe (id TEXT PRIMARY KEY, code TEXT, person_id TEXT, title TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft', created_on TEXT NOT NULL DEFAULT (datetime('now')), updated_on TEXT, FOREIGN KEY(person_id) REFERENCES person(id));"
   sqlStr += "INSERT INTO recipe (id, code, person_id, title) VALUES ('3b4a5b48-f2b7-4348-9986-db21c3042329', '111-111-1111', '40508ede-ad1b-4559-9b2b-444b3f875bbe', 'Sweet Phantom');"
   sqlStr += "INSERT INTO recipe (id, code, person_id, title) VALUES ('60c60cb3-c8e3-4ef5-abaa-850426baea26', '222-222-2222', '40508ede-ad1b-4559-9b2b-444b3f875bbe', 'Flying Twilight');"
   sqlStr += "INSERT INTO recipe (id, code, person_id, title) VALUES ('10e51a4a-a611-4229-9a45-0e4ac781d1b5', '333-333-3333', '40508ede-ad1b-4559-9b2b-444b3f875bbe', 'Electric Tremor');"

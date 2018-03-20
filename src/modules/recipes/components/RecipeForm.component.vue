@@ -7,8 +7,8 @@
                     <input v-model.lazy.trim="recipe.title" class="form-input" type="text" id="recipe-title" placeholder="Title">
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="recipe-internal-code">Internal Code</label>
-                    <input v-model.lazy.trim="recipe.internalCode" class="form-input" type="text" id="recipe-internal-code" placeholder="Internal Code">
+                    <label class="form-label" for="recipe-code">Recipe Code</label>
+                    <input v-model.lazy.trim="recipe.code" class="form-input" type="text" id="recipe-code" placeholder="Recipe Code">
                 </div>
             </form>
         </div>

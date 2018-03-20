@@ -20,6 +20,8 @@ function marshallResults(response) {
     ]
 
   */
+  if ( !response || response.length===0)
+    return response
   let marshalled = [];
   for (let i = 0; i < response.values.length; i++) {
     marshalled.push( _.zipObject( response.columns, response.values[i] ) );
@@ -42,32 +44,78 @@ export class Database {
     sqlUtils.migrate(this.db);
   }
 
-  create(options){
-    // options.tableName
+  create( options ){
+    // options.collection
     // options.item
-    // let params = {
-    //   TableName: options.tableName,
-    //   Item: options.item
-    // }
-    // return this.dynamoDB.put(params).promise()
-  }
-
-  list(options){
-    // options.tableName
+    if ( ( !options ) || ( !options.collection ) || ( !options.collection ) ) {
+      throw 'db.list: Incorrect options object'
+    }
     let self = this;
-    return new Promise(function (fulfill, reject){
+    let sqlStr = '';
+    if (options.collection === 'Recipes') {
+      sqlStr += "INSERT INTO recipe (id, code, person_id, title) VALUES ('"+options.item.id+"', '"+options.item.code+"', '"+options.item.person_id+"', '"+options.item.title+"');"
+    }
+    return new Promise(function ( fulfill, reject ){
       try {
-        let res = self.db.exec("SELECT id, code, title, status FROM recipe");
-        fulfill( marshallResults(res[0]) );
-      } catch (err) {
-        reject(err);
+        self.db.run( sqlStr );
+        fulfill( {status: 'success'} );
+      } catch ( err ) {
+        reject( err );
       }
     });
   }
 
-  read(options){
-    // send back all data as a simple JSON document or object literal
-    // options.success(myData)
+  list( options ){
+    // options.collection
+    // options.status
+    if ( ( !options ) || ( !options.collection ) ) {
+      throw 'db.list: Incorrect options object'
+    }
+    options.status = options.status || { status: 'draft' };
+    let self = this;
+    let sqlStr = '';
+    if (options.collection === 'Recipes') {
+      if (options.status==='archived') {
+        sqlStr += "SELECT id, code, title, status FROM recipe WHERE status = 'archived' ORDER BY created_on DESC;"
+      } else {
+        sqlStr += "SELECT id, code, title, status FROM recipe WHERE status != 'archived' ORDER BY created_on DESC;"
+      }
+    }
+    return new Promise(function ( fulfill, reject ){
+      try {
+        let res = self.db.exec( sqlStr );
+        if (res && res.length>0)
+          fulfill( marshallResults( res[0] ) )
+        else
+          fulfill( [] )
+      } catch ( err ) {
+        reject( err );
+      }
+    });
+  }
+
+  get( options ){
+    // options.collection
+    // options.id
+    if ( ( !options ) || ( !options.collection ) || ( !options.id )) {
+      throw 'db.get: Incorrect options object'
+    }
+    let self = this;
+    let sqlStr = '';
+    if (options.collection === 'Recipes') {
+      sqlStr += "SELECT id, code, title, status FROM recipe WHERE id = '"+options.id+"';"
+    }
+    return new Promise(function ( fulfill, reject ){
+      try {
+        let res = self.db.exec( sqlStr );
+        if (res && res.length>0)
+          fulfill( marshallResults(res[0])[0] );
+        else
+          fulfill( [] )
+      } catch ( err ) {
+        reject( err );
+      }
+    });
   }
 
   find(options){
@@ -76,13 +124,45 @@ export class Database {
   }
 
   update(options){
-    // update an existing entity with the `options.data` here
-    // call `options.success(entity)` when I'm done
+    // options.collection
+    // options.item
+    if ( ( !options ) || ( !options.collection ) || ( !options.item ) ) {
+      throw 'db.list: Incorrect options object'
+    }
+    let self = this;
+    let sqlStr = '';
+    if (options.collection === 'Recipes') {
+      sqlStr += "UPDATE recipe SET code='"+options.item.code+"', title='"+options.item.title+"', person_id='"+options.item.person_id+"' WHERE id='"+options.item.id+"';"
+    }
+    return new Promise(function ( fulfill, reject ){
+      try {
+        self.db.run( sqlStr );
+        fulfill( {status: 'success'} );
+      } catch ( err ) {
+        reject( err );
+      }
+    });
   }
 
   archive(options){
-    // destroy an entity identified with the `options.data` here
-    // call `options.success(entity)` when I'm done
+    // options.collection
+    // options.item
+    if ( ( !options ) || ( !options.collection ) || ( !options.item ) ) {
+      throw 'db.list: Incorrect options object'
+    }
+    let self = this;
+    let sqlStr = '';
+    if (options.collection === 'Recipes') {
+      sqlStr += "UPDATE recipe SET status='archived', person_id='"+options.item.person_id+"' WHERE id='"+options.item.id+"';"
+    }
+    return new Promise(function ( fulfill, reject ){
+      try {
+        self.db.run( sqlStr );
+        fulfill( {status: 'success'} );
+      } catch ( err ) {
+        reject( err );
+      }
+    });
   }
 
   destroy(options){

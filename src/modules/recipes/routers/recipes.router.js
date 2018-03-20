@@ -13,6 +13,7 @@ DELETE /recipes/:id    /recipes/archive/:id  ArchiveRecipe   delete a specific r
 */
 
 import ListRecipes from '../views/ListRecipes.view.vue'
+import ListArchived from '../views/ListArchived.view.vue'
 import DisplayRecipe from '../views/DisplayRecipe.view.vue'
 import NewRecipe from '../views/NewRecipe.view.vue'
 import EditRecipe from '../views/EditRecipe.view.vue'
@@ -23,6 +24,11 @@ export default [
     path: '/recipes/list',
     name: 'ListRecipes',
     component: ListRecipes,
+  },
+  {
+    path: '/recipes/list/archived',
+    name: 'ListArchived',
+    component: ListArchived,
   },
   {
     path: '/recipes/new',

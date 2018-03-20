@@ -47,14 +47,19 @@
 
   export default {
     name: 'RecipeList',
-    data () {
-      return {
-      }
+    props: {
+      status: {
+        type: String,
+        default: 'draft',
+        validator: function (value) {
+          return (value==='draft') || (value==='published') || (value==='archived')
+        }
+      },
     },
     created () {
       // fetch the data when the view is created
       // and the data is already being observed
-      this.fetchData();
+      this.fetchData()
     },
     computed: {
       // use es6 spreader to take the mapped functions
@@ -63,7 +68,7 @@
     },
     methods: {
       fetchData() {
-        this.$store.dispatch('listRecipes');
+        this.$store.dispatch('listRecipes', this.status)
       }
     },
     watch: {

@@ -6,9 +6,10 @@ import utils from '@/utils';
 
 export default {
   name: 'RecipesService',
-  listRecipes() {
+  listRecipes(status) {
     let options = {
-      tableName: 'Recipes'
+      collection: 'Recipes',
+      status: status || ''
     }
     return database.list(options).then(
       function (data) {
@@ -21,21 +22,71 @@ export default {
   },
   createRecipe(recipe) {
     let options = {
-      tableName: 'Recipes',
-      item:{
-        "recipeId": utils.uuid(),
-        "title": recipe.title,
-        "internalCode": recipe.internalCode
+      collection: 'Recipes',
+      item: {
+        id: utils.uuid(),
+        code: recipe.code,
+        title: recipe.title,
+        person_id: recipe.person_id
       }
     }
     return database.create(options).then(
       function (data) {
-        console.info('data',data)
         return {};
       },
       function (err) {
         throw err;
       }
     )
-  }
+  },
+  getRecipe(id) {
+    let options = {
+      collection: 'Recipes',
+      id: id
+    }
+    return database.get(options).then(
+      function (data) {
+        return data;
+      },
+      function (err) {
+        throw err;
+      }
+    )
+  },
+  updateRecipe(recipe) {
+    let options = {
+      collection: 'Recipes',
+      item: {
+        id: recipe.id,
+        code: recipe.code,
+        title: recipe.title,
+        person_id: recipe.person_id
+      }
+    }
+    return database.update(options).then(
+      function (data) {
+        return {};
+      },
+      function (err) {
+        throw err;
+      }
+    )
+  },
+  archiveRecipe(recipe) {
+    let options = {
+      collection: 'Recipes',
+      item: {
+        id: recipe.id,
+        person_id: recipe.person_id
+      }
+    }
+    return database.archive(options).then(
+      function (data) {
+        return {};
+      },
+      function (err) {
+        throw err;
+      }
+    )
+  },
 }

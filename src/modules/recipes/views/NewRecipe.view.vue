@@ -43,6 +43,7 @@
     },
     methods: {
       save() {
+        this.$store.commit('updateRecipeAuthor', '40508ede-ad1b-4559-9b2b-444b3f875bbe')
         this.$store.dispatch('createRecipe')
         this.$router.push({ name: 'ListRecipes' })
       },
